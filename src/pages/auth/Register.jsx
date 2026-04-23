@@ -71,72 +71,86 @@ const Register = () => {
     setMessage({ text: "", type: "" });
 
     try {
-      // Send data to the correct backend endpoint
-      const response = await axios.post(
-        "https://real-state-property-seven.vercel.app/register", // Make sure this matches your backend route
-        {
-          name: formData.fullName, // Map fullName to name for backend
-          email: formData.email,
-          password: formData.password,
-          role: formData.role,
-        },
-      );
+      console.log("🚀 Step 1: Starting registration request");
 
-      // Check if registration was successful
+      const payload = {
+        name: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+        role: formData.role,
+      };
+
+      console.log("📦 Step 2: Payload being sent:", payload);
+
+      const url = "https://real-state-property-backend.vercel.app/api/register";
+      console.log("🌐 Step 3: Sending request to:", url);
+
+      const response = await axios.post(url, payload);
+
+      console.log("✅ Step 4: Response received:", response.data);
+
       if (response.data.success) {
+        console.log("🎉 Step 5: Registration successful");
+
         setMessage({ text: response.data.message, type: "success" });
 
-        // Store the token if returned
         if (response.data.token) {
+          console.log("🔐 Step 6: Saving token");
           localStorage.setItem("token", response.data.token);
           localStorage.setItem("user", JSON.stringify(response.data.user));
         }
 
-        // Reset form
         setFormData({
           fullName: "",
           email: "",
           password: "",
           role: "customer",
         });
+
         setTermsAccepted(false);
 
-        // Redirect to dashboard after 2 seconds
         setTimeout(() => {
+          console.log("🔁 Redirecting to login");
           navigate("/login");
         }, 2000);
       } else {
+        console.log("⚠️ Step 7: Backend returned failure");
         setMessage({
           text: response.data.message || "Registration failed",
           type: "error",
         });
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.log("❌ Step 8: ERROR CAUGHT");
 
-      // Handle different error scenarios
+      console.log("👉 Full error:", error);
+      console.log("👉 Error response:", error.response);
+      console.log("👉 Error message:", error.message);
+
       if (error.response) {
-        // Server responded with error
+        console.log("📡 Server responded with error:", error.response.data);
+
         setMessage({
-          text:
-            error.response.data?.message ||
-            "Registration failed. Please try again.",
+          text: error.response.data?.message || "Server error",
           type: "error",
         });
       } else if (error.request) {
-        // Request was made but no response
+        console.log("📡 No response received from server");
+
         setMessage({
-          text: "Unable to connect to server. Please check your connection.",
+          text: "Unable to connect to server. Check backend URL or CORS.",
           type: "error",
         });
       } else {
-        // Something else happened
+        console.log("⚠️ Unknown error:", error.message);
+
         setMessage({
-          text: "An error occurred. Please try again.",
+          text: "Something went wrong",
           type: "error",
         });
       }
     } finally {
+      console.log("🏁 Request finished");
       setIsLoading(false);
     }
   };
