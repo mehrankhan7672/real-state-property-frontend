@@ -73,7 +73,7 @@ const Register = () => {
     try {
       // Send data to the correct backend endpoint
       const response = await axios.post(
-        "https://real-state-property-backend.vercel.app/register", // Make sure this matches your backend route
+        "https://real-state-property-backend.vercel.app//register", // Make sure this matches your backend route
         {
           name: formData.fullName, // Map fullName to name for backend
           email: formData.email,
