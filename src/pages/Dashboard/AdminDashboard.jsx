@@ -17,7 +17,7 @@ const AdminDashboard = () => {
   const [successMessageText, setSuccessMessageText] = useState("");
 
   // API URL
-  const API_BASE_URL = "http://localhost:5000";
+  const API_BASE_URL = "https://real-state-property-backend.vercel.app/";
 
   // State for dashboard data
   const [stats, setStats] = useState({

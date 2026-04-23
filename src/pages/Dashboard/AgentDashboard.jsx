@@ -68,7 +68,7 @@ const AgentDashboard = () => {
   const [sendingReply, setSendingReply] = useState(false);
 
   // API URL
-  const API_BASE_URL = "http://localhost:5000";
+  const API_BASE_URL = "https://real-state-property-backend.vercel.app/";
 
   // ============ FUNCTIONS ============
 

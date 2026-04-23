@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Set a base URL for your backend API
 const API = axios.create({
-  baseURL: "http://localhost:5000", // your backend URL
+  baseURL: "https://real-state-property-backend.vercel.app/", // your backend URL
   headers: {
     "Content-Type": "application/json",
   },
